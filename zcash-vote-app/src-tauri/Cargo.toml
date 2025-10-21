@@ -1,0 +1,74 @@
+[package]
+name = "zcash-vote-app"
+version = "0.1.0"
+description = "A Tauri App"
+authors = ["you"]
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[lib]
+# The `_lib` suffix may seem redundant but it is necessary
+# to make the lib name unique and wouldn't conflict with the bin name.
+# This seems to be only an issue on Windows, see https://github.com/rust-lang/cargo/issues/8519
+name = "zcash_vote_app_lib"
+crate-type = ["staticlib", "cdylib", "rlib"]
+
+[build-dependencies]
+tauri-build = { version = "2", features = [] }
+
+[dependencies]
+tauri = { version = "2", features = ["test"] }
+tauri-plugin-opener = "2"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+tauri-plugin-dialog = "2"
+
+rusqlite = "0.29.0"
+r2d2 = "0.8.10"
+r2d2_sqlite = "0.22.0"
+anyhow = "1.0.95"
+tokio-util = "0.7.13"
+tokio = "1.42.0"
+tonic = "0.7.2"
+prost = "0.10.1"
+bip0039 = "0.9.0"
+zcash_address = "0.2.0"
+zcash_note_encryption = "0.2.0"
+zcash_primitives = "0.10.2"
+pasta_curves = "0.5.1"
+incrementalmerkletree = "0.3.1"
+rand = "0.9"
+rand_core = "0.6.4"
+hex = {version = "0.4.3", features = ["serde"] }
+blake2b_simd = "1.0.2"
+bech32 = "0.9.1"
+lazy_static = "1.5.0"
+subtle = "2.4.1"
+tracing = "0.1.41"
+reqwest = { version = "0.11.27", features = ["json"] }
+zeroize = "1.8.1"
+zeroize_derive = "1.4.1"
+
+zcash-vote = {git = "https://github.com/hhanh00/zcash-vote.git", rev="346ce2d"}
+#zcash-vote = {path="../../zcash-vote"}
+orchard = "0.3.0"
+
+[target.'cfg(target_os = "android")'.dependencies]
+openssl = { version = "0.10.71", features = ["vendored"] }
+
+[patch.crates-io]
+#orchard = {git = "https://github.com/hhanh00/orchard.git", rev="dff7dee"}
+orchard = {path = "../../orchard"}
+halo2_gadgets  = { git = "https://github.com/zcash/halo2.git", rev = "642924d614305d882cc122739c59144109f4bd3f" }
+halo2_proofs = { git = "https://github.com/zcash/halo2.git", rev = "642924d614305d882cc122739c59144109f4bd3f" }
+
+[dev-dependencies]
+rand_chacha = "0.3.1"
+
+[patch."https://github.com/hhanh00/zcash-vote.git"]
+#zcash-vote = {path = "../../zwallet/native/zcash-vote"}
+
+[profile.dev]
+opt-level = 3
+debug = true

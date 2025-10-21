@@ -1,0 +1,37 @@
+name: Rust CI Windows
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - ci
+    tags:
+      - "v*"
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+    - name: Check out code
+      uses: actions/checkout@v4
+    - uses: pnpm/action-setup@v4
+      with:
+        version: 10
+    - name: Tauri build
+      run: |
+        pnpm install
+        pnpm tauri icon
+        pnpm tauri build --bundles nsis
+    - name: Upload artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: zcash-vote-audit-setup.exe
+        path: src-tauri/target/release/bundle/nsis/*-setup.exe
+    - name: Create Release
+      if: startsWith(github.ref_name, 'v')
+      uses: softprops/action-gh-release@v2
+      with:
+        files: src-tauri/target/release/bundle/nsis/*-setup.exe
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
