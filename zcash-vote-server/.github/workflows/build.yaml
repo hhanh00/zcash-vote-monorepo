@@ -1,0 +1,31 @@
+name: Build vote-server
+
+on:
+  workflow_dispatch:
+  pull_request:
+  push:
+    branches:
+      - ci
+    tags:
+      - "v*"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Build
+      run: cargo build -r
+    - name: Staging
+      run: |
+        mkdir zcash-vote-server
+        cp target/release/zcash-vote-server zcash-vote-server
+        cp Rocket.toml zcash-vote-server
+        mkdir zcash-vote-server/data
+        tar cvzf zcash-vote-server.tgz zcash-vote-server
+    - name: Release
+      uses: softprops/action-gh-release@v2
+      if: startsWith(github.ref, 'refs/tags/')
+      with:
+        files: zcash-vote-server.tgz
