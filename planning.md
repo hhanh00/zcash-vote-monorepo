@@ -1,0 +1,4 @@
+- [ ] add modal spinner until sync is complete
+- [ ] add id to election def
+- [ ] deterministic app state
+- [ ] increase timeout of vote submission
