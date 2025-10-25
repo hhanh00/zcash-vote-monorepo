@@ -27,16 +27,3 @@ pasta_curves = "0.5.1"
 
 zcash-vote = {git = "https://github.com/hhanh00/zcash-vote.git", rev="8b42736"}
 orchard = "0.3.0"
-
-[patch.crates-io]
-#orchard = {git = "https://github.com/hhanh00/orchard.git", rev="a2ec07c"}
-orchard = {path = "../../orchard"}
-halo2_gadgets  = { git = "https://github.com/zcash/halo2.git", rev = "642924d614305d882cc122739c59144109f4bd3f" }
-halo2_proofs = { git = "https://github.com/zcash/halo2.git", rev = "642924d614305d882cc122739c59144109f4bd3f" }
-
-[patch."https://github.com/hhanh00/zcash-vote.git"]
-zcash-vote = {path = "../../zcash-vote"}
-
-[profile.dev]
-opt-level = 3
-debug = true

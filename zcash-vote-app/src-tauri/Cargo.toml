@@ -57,18 +57,5 @@ orchard = "0.3.0"
 [target.'cfg(target_os = "android")'.dependencies]
 openssl = { version = "0.10.71", features = ["vendored"] }
 
-[patch.crates-io]
-#orchard = {git = "https://github.com/hhanh00/orchard.git", rev="dff7dee"}
-orchard = {path = "../../orchard"}
-halo2_gadgets  = { git = "https://github.com/zcash/halo2.git", rev = "642924d614305d882cc122739c59144109f4bd3f" }
-halo2_proofs = { git = "https://github.com/zcash/halo2.git", rev = "642924d614305d882cc122739c59144109f4bd3f" }
-
 [dev-dependencies]
 rand_chacha = "0.3.1"
-
-[patch."https://github.com/hhanh00/zcash-vote.git"]
-#zcash-vote = {path = "../../zwallet/native/zcash-vote"}
-
-[profile.dev]
-opt-level = 3
-debug = true
